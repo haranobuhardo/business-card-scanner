@@ -60,10 +60,10 @@ export default function ExportActions({ contact, onReset }) {
         {/* Oat native <hr> */}
         <hr />
 
-        {/* Oat outline button with w-100 utility */}
+        {/* Oat outline button with w-full utility */}
         <button
           id="scan-another-button"
-          className="outline w-100"
+          className="outline w-full"
           onClick={onReset}
         >
           Scan Another Card
