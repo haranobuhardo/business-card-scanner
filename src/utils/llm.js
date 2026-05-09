@@ -114,23 +114,34 @@ EXAMPLE:
       cleanText = cleanText.split('<|thought|>')[0];
     }
     
-    // Extract JSON block from potential surrounding text
-    const firstBrace = cleanText.indexOf('{');
-    const lastBrace = cleanText.lastIndexOf('}');
-    
-    if (firstBrace === -1 || lastBrace === -1) {
-      throw new Error("No JSON object found in response");
-    }
-    
-    let jsonStr = cleanText.substring(firstBrace, lastBrace + 1);
-    
-    // Fix Gemma escaping bug where it escapes quotes for the next keys (e.g. \",\"rawText\":\"...)
-    jsonStr = jsonStr.replace(/\\"/g, '"');
-    
     console.log("Raw Output:", text);
-    console.log("Parsed JSON:", JSON.parse(jsonStr));
-    
-    return JSON.parse(jsonStr);
+
+    let parsed = null;
+    const firstBrace = cleanText.indexOf('{');
+    if (firstBrace !== -1) {
+      // Find all indices of '}' from the end
+      const braceIndices = [];
+      for (let i = cleanText.length - 1; i > firstBrace; i--) {
+        if (cleanText[i] === '}') braceIndices.push(i);
+      }
+
+      // Try parsing each candidate from longest to shortest
+      for (const lastBrace of braceIndices) {
+        let candidate = cleanText.substring(firstBrace, lastBrace + 1);
+        // Fix Gemma escaping bug
+        candidate = candidate.replace(/\\"/g, '"');
+        
+        try {
+          parsed = JSON.parse(candidate);
+          console.log("Parsed JSON:", parsed);
+          return parsed;
+        } catch (e) {
+          continue;
+        }
+      }
+    }
+
+    throw new Error("Failed to find valid JSON in LLM response");
   } catch (error) {
     if (timerInterval) clearInterval(timerInterval);
     console.error("AI Extraction Error:", error);

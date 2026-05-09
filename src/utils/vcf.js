@@ -62,11 +62,12 @@ export function downloadVCard(contact) {
 export function getWhatsAppUrl(contact, template = 'Hello {name}!') {
   const phone = contact.mobile || contact.phone;
   if (!phone) return null;
-
+  
   // Strip non-digit chars for wa.me (keep leading +)
   const cleanPhone = phone.replace(/[^\d+]/g, '').replace(/^\+/, '');
   const message = template.replace(/\{name\}/g, contact.name || 'there');
   const encoded = encodeURIComponent(message);
-
+  
+  console.log(cleanPhone)
   return `https://wa.me/${cleanPhone}?text=${encoded}`;
 }
