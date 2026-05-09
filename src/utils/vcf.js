@@ -60,7 +60,7 @@ export function downloadVCard(contact) {
  * @returns {string|null} wa.me URL or null if no phone
  */
 export function getWhatsAppUrl(contact, template = 'Hello {name}!') {
-  const phone = contact.phone || contact.mobile;
+  const phone = contact.mobile || contact.phone;
   if (!phone) return null;
 
   // Strip non-digit chars for wa.me (keep leading +)
