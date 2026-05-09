@@ -16,19 +16,79 @@ import { useState, useRef } from 'react';
 export default function Scanner({ onScanComplete, isScanning, progress }) {
   const [preview, setPreview] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [isCompressing, setIsCompressing] = useState(false);
   const fileInputRef = useRef(null);
+
+  const compressImage = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const MAX_WIDTH = 1920;
+          const MAX_HEIGHT = 1920;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          
+          ctx.drawImage(img, 0, 0, width, height);
+
+          canvas.toBlob((blob) => {
+            if (blob) {
+              resolve(new File([blob], file.name, {
+                type: 'image/jpeg',
+                lastModified: Date.now(),
+              }));
+            } else {
+              reject(new Error('Canvas to Blob failed'));
+            }
+          }, 'image/jpeg', 0.95);
+        };
+        img.onerror = () => reject(new Error('Image load failed'));
+        img.src = event.target.result;
+      };
+      reader.onerror = () => reject(new Error('FileReader failed'));
+      reader.readAsDataURL(file);
+    });
+  };
 
   function handleFileChange(e) {
     const file = e.target.files?.[0];
     if (!file) return;
+    
     setSelectedFile(file);
     setPreview(URL.createObjectURL(file));
   }
 
-  function handleScan() {
-    if (selectedFile && onScanComplete) {
-      onScanComplete(selectedFile);
+  async function handleScan() {
+    if (!selectedFile || !onScanComplete) return;
+    
+    setIsCompressing(true);
+    let finalFile = selectedFile;
+    try {
+      finalFile = await compressImage(selectedFile);
+    } catch (err) {
+      console.error('Compression failed', err);
+    } finally {
+      setIsCompressing(false);
     }
+    onScanComplete(finalFile);
   }
 
   function handleReset() {
@@ -114,9 +174,9 @@ export default function Scanner({ onScanComplete, isScanning, progress }) {
             id="scan-button"
             className="large"
             onClick={handleScan}
-            disabled={!selectedFile || isScanning}
+            disabled={!selectedFile || isScanning || isCompressing}
           >
-            {isScanning ? 'Scanning…' : 'Scan Card'}
+            {isCompressing ? 'Compressing…' : isScanning ? 'Scanning…' : 'Scan Card'}
           </button>
         </div>
       </article>

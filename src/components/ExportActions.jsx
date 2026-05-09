@@ -51,7 +51,7 @@ export default function ExportActions({ contact, onReset }) {
               WhatsApp
             </a>
           ) : (
-            <button id="whatsapp-button" className="btn-whatsapp" disabled title="Phone number required">
+              <button id="whatsapp-button" className="btn-whatsapp" disabled title="Phone number required">
               WhatsApp
             </button>
           )}
