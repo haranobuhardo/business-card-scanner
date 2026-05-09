@@ -48,6 +48,7 @@ CRITICAL INSTRUCTIONS:
 3. If there are multiple phone numbers, prioritize the direct line or mobile number for 'mobile' and the general office number for 'phone'.
 4. Format intelligently: lowercase all emails, remove all spaces/dashes from phone numbers and format them in clean international format (e.g. +62812345678), fix obvious OCR typos, and trim all whitespace.
 5. Do NOT hallucinate. If a field is not present, leave it as an empty string.
+6. Don't put any explanation into the JSON response! Just return the expected output (if you want to explain, just explain on the rawText output).
 
 Return ONLY a valid JSON object matching exactly this structure (no markdown code blocks, just raw JSON).
 EXAMPLE:
