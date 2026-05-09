@@ -13,7 +13,15 @@ import { useState, useRef } from 'react';
  *   - Upload drop zone (.upload-label / .upload-area)
  *   - Image preview (.preview-container)
  */
-export default function Scanner({ onScanComplete, isScanning, progress }) {
+export default function Scanner({ 
+  onScanComplete, 
+  isScanning, 
+  progress,
+  extractionMethod,
+  setExtractionMethod,
+  apiKey,
+  setApiKey
+}) {
   const [preview, setPreview] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [isCompressing, setIsCompressing] = useState(false);
@@ -110,6 +118,46 @@ export default function Scanner({ onScanComplete, isScanning, progress }) {
           <p>Take a photo or upload an image of a business card</p>
         </header>
 
+        {/* Settings Area */}
+        <div className="settings-area mt-6 mb-6" style={{ padding: '1rem', background: 'rgba(255,255,255,0.05)', borderRadius: '8px' }}>
+          <div className="hstack gap-4" style={{ marginBottom: extractionMethod === 'ai' ? '1rem' : 0 }}>
+            <label className="hstack gap-2 cursor-pointer">
+              <input 
+                type="radio" 
+                name="method" 
+                value="ocr" 
+                checked={extractionMethod === 'ocr'}
+                onChange={() => setExtractionMethod('ocr')}
+              />
+              <span>Fast OCR (Local)</span>
+            </label>
+            <label className="hstack gap-2 cursor-pointer">
+              <input 
+                type="radio" 
+                name="method" 
+                value="ai" 
+                checked={extractionMethod === 'ai'}
+                onChange={() => setExtractionMethod('ai')}
+              />
+              <span>Smart AI (Gemma 4)</span>
+            </label>
+          </div>
+
+          {extractionMethod === 'ai' && (
+            <div className="api-key-input mt-2">
+              <label data-field>
+                <small>Google Gen AI API Key (Saved locally)</small>
+                <input 
+                  type="password" 
+                  placeholder="AIzaSy..." 
+                  value={apiKey}
+                  onChange={(e) => setApiKey(e.target.value)}
+                />
+              </label>
+            </div>
+          )}
+        </div>
+
         {/* Upload area — custom (no Oat equivalent) */}
         <div className="upload-area">
           <input
@@ -134,12 +182,18 @@ export default function Scanner({ onScanComplete, isScanning, progress }) {
 
         {/* Image preview — custom */}
         {preview && (
-          <div className="preview-container">
+          <div className="preview-container" style={{ position: 'relative' }}>
             <img
               src={preview}
               alt="Business card preview"
               className="card-preview"
+              style={{ opacity: isScanning ? 0.4 : 1, transition: 'opacity 0.2s' }}
             />
+            {isScanning && (
+              <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+                <div aria-busy="true" data-spinner="large"></div>
+              </div>
+            )}
             {!isScanning && (
               <button
                 type="button"
@@ -162,7 +216,10 @@ export default function Scanner({ onScanComplete, isScanning, progress }) {
               id="scan-progress"
             ></progress>
             <div className="hstack justify-between mt-2">
-              <small className="text-light">{progress?.status || 'Initializing OCR…'}</small>
+              <div className="hstack gap-2 align-center">
+                <div aria-busy="true" data-spinner="small"></div>
+                <small className="text-light">{progress?.status || 'Initializing…'}</small>
+              </div>
               <small className="text-light">{progressPct}%</small>
             </div>
           </div>
@@ -174,7 +231,9 @@ export default function Scanner({ onScanComplete, isScanning, progress }) {
             id="scan-button"
             className="large"
             onClick={handleScan}
-            disabled={!selectedFile || isScanning || isCompressing}
+            disabled={!selectedFile || isScanning || isCompressing || (extractionMethod === 'ai' && !apiKey)}
+            // aria-busy={isCompressing || isScanning ? "true" : undefined}
+            // data-spinner={isCompressing || isScanning ? "small" : undefined}
           >
             {isCompressing ? 'Compressing…' : isScanning ? 'Scanning…' : 'Scan Card'}
           </button>

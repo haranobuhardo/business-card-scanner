@@ -1,9 +1,10 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import Scanner from './components/Scanner';
 import ResultForm from './components/ResultForm';
 import ExportActions from './components/ExportActions';
 import { recognizeImage } from './utils/ocr';
 import { parseContactText } from './utils/parser';
+import { extractContactWithAI } from './utils/llm';
 import './App.css';
 
 const EMPTY_CONTACT = {
@@ -21,27 +22,38 @@ export default function App() {
   const [isScanning, setIsScanning] = useState(false);
   const [progress, setProgress] = useState(null);
   const [contact, setContact] = useState(EMPTY_CONTACT);
+  
+  const [extractionMethod, setExtractionMethod] = useState('ocr'); // 'ocr' | 'ai'
+  const [apiKey, setApiKey] = useState(() => localStorage.getItem('gemini_api_key') || '');
+
+  useEffect(() => {
+    localStorage.setItem('gemini_api_key', apiKey);
+  }, [apiKey]);
 
   const handleScan = useCallback(async (file) => {
     setIsScanning(true);
-    setProgress({ status: 'Initializing OCR…', progress: 0 });
+    setProgress({ status: 'Initializing...', progress: 0 });
 
     try {
-      const text = await recognizeImage(file, (p) => {
-        setProgress(p);
-      });
-
-      const parsed = parseContactText(text);
-      setContact(parsed);
+      if (extractionMethod === 'ai' && apiKey) {
+        const parsed = await extractContactWithAI(file, apiKey, setProgress);
+        setContact(parsed);
+      } else {
+        const text = await recognizeImage(file, (p) => {
+          setProgress(p);
+        });
+        const parsed = parseContactText(text);
+        setContact(parsed);
+      }
       setView('result');
     } catch (err) {
-      console.error('OCR failed:', err);
-      alert('Scan failed. Please try again with a clearer image.');
+      console.error('Scan failed:', err);
+      alert(err.message || 'Scan failed. Please try again with a clearer image.');
     } finally {
       setIsScanning(false);
       setProgress(null);
     }
-  }, []);
+  }, [extractionMethod, apiKey]);
 
   const handleReset = useCallback(() => {
     setContact(EMPTY_CONTACT);
@@ -65,6 +77,10 @@ export default function App() {
             onScanComplete={handleScan}
             isScanning={isScanning}
             progress={progress}
+            extractionMethod={extractionMethod}
+            setExtractionMethod={setExtractionMethod}
+            apiKey={apiKey}
+            setApiKey={setApiKey}
           />
         )}
 
