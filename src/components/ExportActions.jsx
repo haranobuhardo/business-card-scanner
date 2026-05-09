@@ -15,7 +15,7 @@ export default function ExportActions({ contact, onReset }) {
   return (
     <section className="export-section">
       <div className="card export-card">
-        <h2>Export</h2>
+        <h2 className='mb-10'>Export</h2>
 
         <div className="export-buttons">
           <button

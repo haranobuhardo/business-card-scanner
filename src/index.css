@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
+@import "tailwindcss";
+
 :root {
   --color-bg-dark: #09090b;
   --color-bg-gradient: linear-gradient(145deg, #09090b 0%, #1c1c28 100%);

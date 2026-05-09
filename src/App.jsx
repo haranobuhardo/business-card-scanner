@@ -53,7 +53,7 @@ export default function App() {
       <header className="app-header">
         <div className="header-content">
           <h1>
-            CardScan
+            Business Card Scanner
           </h1>
           <small className="header-tag">PWA</small>
         </div>
@@ -70,8 +70,8 @@ export default function App() {
 
         {view === 'result' && (
           <div className="result-container">
-            <ResultForm contact={contact} onChange={setContact} />
             <ExportActions contact={contact} onReset={handleReset} />
+            <ResultForm contact={contact} onChange={setContact} />
           </div>
         )}
       </main>
