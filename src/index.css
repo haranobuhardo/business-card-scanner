@@ -2,43 +2,50 @@
 
 @import "tailwindcss";
 
+/* ============================================
+   Oat CSS Dark Theme Overrides
+   ============================================ */
 :root {
-  --color-bg-dark: #09090b;
-  --color-bg-gradient: linear-gradient(145deg, #09090b 0%, #1c1c28 100%);
-  --color-glass: rgba(255, 255, 255, 0.03);
-  --color-glass-border: rgba(255, 255, 255, 0.08);
-  --color-glass-hover: rgba(255, 255, 255, 0.06);
-  --color-accent: #8b5cf6;
-  --color-accent-hover: #a78bfa;
+  /* Override Oat theme vars for premium dark glassmorphic look */
+  --background: #09090b;
+  --foreground: #f8fafc;
+  --card: rgba(255, 255, 255, 0.03);
+  --card-foreground: #f8fafc;
+  --primary: #8b5cf6;
+  --primary-foreground: #ffffff;
+  --secondary: rgba(255, 255, 255, 0.06);
+  --secondary-foreground: #f8fafc;
+  --muted: rgba(255, 255, 255, 0.05);
+  --muted-foreground: #94a3b8;
+  --faint: rgba(255, 255, 255, 0.02);
+  --faint-foreground: #64748b;
+  --accent: rgba(255, 255, 255, 0.06);
+  --danger: #ef4444;
+  --danger-foreground: #ffffff;
+  --success: #10b981;
+  --success-foreground: #ffffff;
+  --warning: #f59e0b;
+  --warning-foreground: #09090b;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.08);
+  --ring: #8b5cf6;
+
+  /* Custom app tokens (not in Oat) */
   --color-accent-glow: rgba(139, 92, 246, 0.4);
-  --color-text: #f8fafc;
-  --color-text-muted: #94a3b8;
-  --color-border: #27272a;
-  --color-success: #10b981;
   --color-whatsapp: #25d366;
-  --radius: 16px;
-  --radius-lg: 24px;
-  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
-  --shadow-glow: 0 0 20px var(--color-accent-glow);
-  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --color-whatsapp-hover: #128c7e;
+  --color-bg-gradient: linear-gradient(145deg, #09090b 0%, #1c1c28 100%);
+
+  color-scheme: dark;
   font-family: 'Outfit', system-ui, -apple-system, sans-serif;
 }
 
-*, *::before, *::after { box-sizing: border-box; }
-
-html { color-scheme: dark; }
-
 body {
-  margin: 0;
   background: var(--color-bg-gradient);
   background-attachment: fixed;
-  color: var(--color-text);
-  min-height: 100vh;
-  -webkit-font-smoothing: antialiased;
 }
 
-/* Add an animated background blob for extra premium feel */
+/* Animated background blobs for premium feel */
 body::before {
   content: '';
   position: fixed;

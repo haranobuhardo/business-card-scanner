@@ -50,14 +50,14 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <header className="app-header">
-        <div className="header-content">
-          <h1>
-            Business Card Scanner
-          </h1>
-          <small className="header-tag">PWA</small>
+      {/* App header — Oat .hstack for layout */}
+      <nav className="app-header">
+        <div className="hstack" style={{ maxWidth: 650, margin: '0 auto' }}>
+          <a href="/" className="unstyled" style={{ color: 'inherit' }}>
+            <h4 style={{ margin: 0 }}>Business Card Scanner</h4>
+          </a>
         </div>
-      </header>
+      </nav>
 
       <main className="app-main">
         {view === 'scan' && (
@@ -69,7 +69,7 @@ export default function App() {
         )}
 
         {view === 'result' && (
-          <div className="result-container">
+          <div className="result-container vstack">
             <ExportActions contact={contact} onReset={handleReset} />
             <ResultForm contact={contact} onChange={setContact} />
           </div>

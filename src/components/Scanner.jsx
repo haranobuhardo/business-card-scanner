@@ -2,6 +2,16 @@ import { useState, useRef } from 'react';
 
 /**
  * Scanner component — handles image capture/upload and triggers OCR.
+ *
+ * Oat CSS components used:
+ *   - <article class="card"> with <header> for card layout
+ *   - Native <progress> (Oat styles it via progress.css)
+ *   - <button class="large"> for scan action (gradient added via CSS)
+ *   - <button class="icon small"> for reset overlay
+ *
+ * Custom (no Oat equivalent):
+ *   - Upload drop zone (.upload-label / .upload-area)
+ *   - Image preview (.preview-container)
  */
 export default function Scanner({ onScanComplete, isScanning, progress }) {
   const [preview, setPreview] = useState(null);
@@ -32,13 +42,15 @@ export default function Scanner({ onScanComplete, isScanning, progress }) {
     : 0;
 
   return (
-    <section className="scanner-section">
-      <div className="card scan-card">
-        <h2>Scan Business Card</h2>
-        <p className="scan-subtitle">
-          Take a photo or upload an image of a business card
-        </p>
+    <section>
+      {/* Oat card: <article class="card"> with <header> */}
+      <article className="card">
+        <header>
+          <h3>Scan Business Card</h3>
+          <p>Take a photo or upload an image of a business card</p>
+        </header>
 
+        {/* Upload area — custom (no Oat equivalent) */}
         <div className="upload-area">
           <input
             ref={fileInputRef}
@@ -60,6 +72,7 @@ export default function Scanner({ onScanComplete, isScanning, progress }) {
           )}
         </div>
 
+        {/* Image preview — custom */}
         {preview && (
           <div className="preview-container">
             <img
@@ -70,7 +83,7 @@ export default function Scanner({ onScanComplete, isScanning, progress }) {
             {!isScanning && (
               <button
                 type="button"
-                className="btn-reset"
+                className="icon small btn-reset"
                 onClick={handleReset}
                 title="Remove image"
               >
@@ -80,6 +93,7 @@ export default function Scanner({ onScanComplete, isScanning, progress }) {
           </div>
         )}
 
+        {/* Progress — Oat native <progress> + gradient override */}
         {isScanning && (
           <div className="progress-section">
             <progress
@@ -87,22 +101,25 @@ export default function Scanner({ onScanComplete, isScanning, progress }) {
               max="100"
               id="scan-progress"
             ></progress>
-            <small className="progress-label">
-              {progress?.status || 'Initializing OCR…'} — {progressPct}%
-            </small>
+            <div className="hstack justify-between mt-2">
+              <small className="text-light">{progress?.status || 'Initializing OCR…'}</small>
+              <small className="text-light">{progressPct}%</small>
+            </div>
           </div>
         )}
 
+        {/* Scan button — Oat <button class="large"> + gradient via CSS */}
         <div className="scan-actions">
           <button
             id="scan-button"
+            className="large"
             onClick={handleScan}
             disabled={!selectedFile || isScanning}
           >
             {isScanning ? 'Scanning…' : 'Scan Card'}
           </button>
         </div>
-      </div>
+      </article>
     </section>
   );
 }

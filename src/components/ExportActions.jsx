@@ -2,6 +2,13 @@ import { downloadVCard, getWhatsAppUrl } from '../utils/vcf';
 
 /**
  * ExportActions — VCF download + WhatsApp message buttons.
+ *
+ * Oat CSS components used:
+ *   - <article class="card"> with <header>
+ *   - <button> (native Oat button, gradient via CSS .btn-vcf)
+ *   - <a class="button"> (Oat styled anchor-as-button, gradient via CSS .btn-whatsapp)
+ *   - <button class="outline w-100"> (Oat outline button)
+ *   - <hr> (Oat native styled)
  */
 export default function ExportActions({ contact, onReset }) {
   const waUrl = getWhatsAppUrl(contact);
@@ -13,13 +20,18 @@ export default function ExportActions({ contact, onReset }) {
   }
 
   return (
-    <section className="export-section">
-      <div className="card export-card">
-        <h2 className='mb-10'>Export</h2>
+    <section>
+      {/* Oat card with header */}
+      <article className="card">
+        <header>
+          <h3>Export</h3>
+        </header>
 
-        <div className="export-buttons">
+        <div className="export-buttons mt-4">
+          {/* Oat <button> + gradient via .btn-vcf */}
           <button
             id="download-vcf-button"
+            className="btn-vcf"
             onClick={handleDownloadVcf}
             disabled={!hasName}
             title={hasName ? 'Download VCF contact file' : 'Name is required'}
@@ -27,33 +39,36 @@ export default function ExportActions({ contact, onReset }) {
             Download VCF
           </button>
 
+          {/* Oat <a class="button"> + gradient via .btn-whatsapp */}
           {waUrl ? (
             <a
               id="whatsapp-button"
               href={waUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-whatsapp"
+              className="button btn-whatsapp"
             >
               WhatsApp
             </a>
           ) : (
-            <button id="whatsapp-button" disabled title="Phone number required">
+            <button id="whatsapp-button" className="btn-whatsapp" disabled title="Phone number required">
               WhatsApp
             </button>
           )}
         </div>
 
+        {/* Oat native <hr> */}
         <hr />
 
+        {/* Oat outline button with w-100 utility */}
         <button
           id="scan-another-button"
-          className="btn-secondary"
+          className="outline w-100"
           onClick={onReset}
         >
           Scan Another Card
         </button>
-      </div>
+      </article>
     </section>
   );
 }

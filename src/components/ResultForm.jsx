@@ -1,5 +1,11 @@
 /**
  * ResultForm — editable form showing parsed contact fields + raw OCR text.
+ *
+ * Oat CSS components used:
+ *   - <article class="card"> with <header>
+ *   - <label data-field> wrapping label text + <input> (Oat form pattern)
+ *   - <details> / <summary> (Oat accordion pattern)
+ *   - <textarea> inside details (Oat native + custom glass override)
  */
 export default function ResultForm({ contact, onChange }) {
   function handleChange(field, value) {
@@ -8,81 +14,84 @@ export default function ResultForm({ contact, onChange }) {
 
   return (
     <section className="result-section">
-      <div className="card result-card">
-        <h2>Extracted Contact</h2>
-        <p className="result-subtitle">Review and edit the parsed fields</p>
+      {/* Oat card with header */}
+      <article className="card">
+        <header>
+          <h3>Extracted Contact</h3>
+          <p>Review and edit the parsed fields</p>
+        </header>
 
-        <form onSubmit={(e) => e.preventDefault()}>
-          <fieldset>
-            <div className="input-group">
-              <label htmlFor="field-name">Name</label>
-              <input
-                id="field-name"
-                type="text"
-                placeholder="Full Name"
-                value={contact.name}
-                onChange={(e) => handleChange('name', e.target.value)}
-              />
-            </div>
+        {/* Oat form: <label data-field> wraps label text + input */}
+        <form onSubmit={(e) => e.preventDefault()} className="mt-4">
+          <label data-field>
+            Name
+            <input
+              id="field-name"
+              type="text"
+              placeholder="Full Name"
+              value={contact.name}
+              onChange={(e) => handleChange('name', e.target.value)}
+            />
+          </label>
 
-            <div className="input-group">
-              <label htmlFor="field-company">Company</label>
-              <input
-                id="field-company"
-                type="text"
-                placeholder="Company Name"
-                value={contact.company}
-                onChange={(e) => handleChange('company', e.target.value)}
-              />
-            </div>
+          <label data-field>
+            Company
+            <input
+              id="field-company"
+              type="text"
+              placeholder="Company Name"
+              value={contact.company}
+              onChange={(e) => handleChange('company', e.target.value)}
+            />
+          </label>
 
-            <div className="input-group">
-              <label htmlFor="field-email">Email</label>
-              <input
-                id="field-email"
-                type="email"
-                placeholder="email@example.com"
-                value={contact.email}
-                onChange={(e) => handleChange('email', e.target.value)}
-              />
-            </div>
+          <label data-field>
+            Email
+            <input
+              id="field-email"
+              type="email"
+              placeholder="email@example.com"
+              value={contact.email}
+              onChange={(e) => handleChange('email', e.target.value)}
+            />
+          </label>
 
-            <div className="input-group">
-              <label htmlFor="field-phone">Phone</label>
-              <input
-                id="field-phone"
-                type="tel"
-                placeholder="+62 812 3456 7890"
-                value={contact.phone}
-                onChange={(e) => handleChange('phone', e.target.value)}
-              />
-            </div>
+          <label data-field>
+            Phone
+            <input
+              id="field-phone"
+              type="tel"
+              placeholder="+62 812 3456 7890"
+              value={contact.phone}
+              onChange={(e) => handleChange('phone', e.target.value)}
+            />
+          </label>
 
-            <div className="input-group">
-              <label htmlFor="field-mobile">Mobile</label>
-              <input
-                id="field-mobile"
-                type="tel"
-                placeholder="+62 812 3456 7890"
-                value={contact.mobile}
-                onChange={(e) => handleChange('mobile', e.target.value)}
-              />
-            </div>
+          <label data-field>
+            Mobile
+            <input
+              id="field-mobile"
+              type="tel"
+              placeholder="+62 812 3456 7890"
+              value={contact.mobile}
+              onChange={(e) => handleChange('mobile', e.target.value)}
+            />
+          </label>
 
-            <div className="input-group">
-              <label htmlFor="field-website">Website</label>
-              <input
-                id="field-website"
-                type="url"
-                placeholder="www.example.com"
-                value={contact.website}
-                onChange={(e) => handleChange('website', e.target.value)}
-              />
-            </div>
-          </fieldset>
+          <label data-field>
+            Website
+            <input
+              id="field-website"
+              type="url"
+              placeholder="www.example.com"
+              value={contact.website}
+              onChange={(e) => handleChange('website', e.target.value)}
+            />
+          </label>
         </form>
 
-        <details className="raw-text-details">
+        {/* Oat native <details>/<summary> accordion */}
+        <details className="raw-text-details mt-4">
           <summary>Raw OCR Text</summary>
           <textarea
             id="raw-ocr-text"
@@ -91,7 +100,7 @@ export default function ResultForm({ contact, onChange }) {
             rows={6}
           />
         </details>
-      </div>
+      </article>
     </section>
   );
 }
