@@ -1,16 +1,66 @@
-# React + Vite
+# Business Card Scanner PWA
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A fast, offline-capable Progressive Web App that scans business cards, extracts contact information using on-device OCR, and lets you save contacts or message them directly.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **On-Device OCR**: Uses Tesseract.js to scan cards without sending images to a server.
+- **Smart Parsing**: Automatically extracts names, phone numbers, emails, and company details.
+- **Export Options**: Download as `.vcf` (vCard) to save directly to your phone's contacts, or open WhatsApp instantly.
+- **PWA Ready**: Install on your home screen and use offline.
+- **Modern UI**: Clean, responsive design built with Oat CSS.
 
-## React Compiler
+## Quick Start
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Prerequisites
+- Node.js (v18+)
+- npm, yarn, or pnpm
 
-## Expanding the ESLint configuration
+### Installation & Development
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+2. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+3. Build for production:
+   ```bash
+   npm run build
+   ```
+
+## Deployment (Simple)
+
+This app is a static React site built with Vite. It can be deployed for free on any static hosting platform.
+
+### Vercel (Recommended)
+1. Install Vercel CLI: `npm i -g vercel`
+2. Run `vercel` in the project root and follow the prompts.
+3. For production, run `vercel --prod`.
+
+### Netlify
+1. Install Netlify CLI: `npm install -g netlify-cli`
+2. Run `netlify deploy` and follow the prompts.
+3. For production, run `netlify deploy --prod`.
+
+### GitHub Pages
+1. Install gh-pages: `npm install gh-pages --save-dev`
+2. Add `"homepage": "https://<your-username>.github.io/<repo-name>"` to `package.json`.
+3. Add deploy scripts to `package.json`:
+   ```json
+   "scripts": {
+     "predeploy": "npm run build",
+     "deploy": "gh-pages -d dist"
+   }
+   ```
+4. Run `npm run deploy`.
+
+## Tech Stack
+- React
+- Vite
+- Tesseract.js (OCR)
+- Oat CSS
