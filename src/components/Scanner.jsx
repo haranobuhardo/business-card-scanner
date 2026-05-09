@@ -34,7 +34,7 @@ export default function Scanner({ onScanComplete, isScanning, progress }) {
   return (
     <section className="scanner-section">
       <div className="card scan-card">
-        <h2>📷 Scan Business Card</h2>
+        <h2>Scan Business Card</h2>
         <p className="scan-subtitle">
           Take a photo or upload an image of a business card
         </p>
@@ -52,7 +52,9 @@ export default function Scanner({ onScanComplete, isScanning, progress }) {
 
           {!preview && (
             <label htmlFor="card-image-input" className="upload-label">
-              <span className="upload-icon">📁</span>
+              <span className="upload-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              </span>
               <span>Choose image or take photo</span>
             </label>
           )}
@@ -97,7 +99,7 @@ export default function Scanner({ onScanComplete, isScanning, progress }) {
             onClick={handleScan}
             disabled={!selectedFile || isScanning}
           >
-            {isScanning ? '⏳ Scanning…' : '🔍 Scan Card'}
+            {isScanning ? 'Scanning…' : 'Scan Card'}
           </button>
         </div>
       </div>

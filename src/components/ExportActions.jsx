@@ -15,7 +15,7 @@ export default function ExportActions({ contact, onReset }) {
   return (
     <section className="export-section">
       <div className="card export-card">
-        <h2>📤 Export</h2>
+        <h2>Export</h2>
 
         <div className="export-buttons">
           <button
@@ -24,7 +24,7 @@ export default function ExportActions({ contact, onReset }) {
             disabled={!hasName}
             title={hasName ? 'Download VCF contact file' : 'Name is required'}
           >
-            💾 Download VCF
+            Download VCF
           </button>
 
           {waUrl ? (
@@ -35,11 +35,11 @@ export default function ExportActions({ contact, onReset }) {
               rel="noopener noreferrer"
               className="btn-whatsapp"
             >
-              💬 WhatsApp
+              WhatsApp
             </a>
           ) : (
             <button id="whatsapp-button" disabled title="Phone number required">
-              💬 WhatsApp
+              WhatsApp
             </button>
           )}
         </div>
@@ -51,7 +51,7 @@ export default function ExportActions({ contact, onReset }) {
           className="btn-secondary"
           onClick={onReset}
         >
-          📷 Scan Another Card
+          Scan Another Card
         </button>
       </div>
     </section>

@@ -53,7 +53,6 @@ export default function App() {
       <header className="app-header">
         <div className="header-content">
           <h1>
-            <span className="header-icon">📇</span>
             CardScan
           </h1>
           <small className="header-tag">PWA</small>
@@ -78,16 +77,7 @@ export default function App() {
       </main>
 
       <footer className="app-footer">
-        <small>
-          Business Card Scanner • Offline-ready PWA •{' '}
-          <a
-            href="https://github.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            GitHub
-          </a>
-        </small>
+        <small>Business Card Scanner - Made by Hardo & Gemini</small>
       </footer>
     </div>
   );
