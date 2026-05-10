@@ -64,9 +64,9 @@ export default function App() {
     <div className="app-shell">
       {/* App header — Oat .hstack for layout */}
       <nav className="app-header">
-        <div className="hstack" style={{ maxWidth: 650, margin: '0 auto' }}>
-          <a href="/" className="unstyled" style={{ color: 'inherit' }}>
-            <h4 style={{ margin: 0 }}>Business Card Scanner</h4>
+        <div className="hstack">
+          <a href="/" className="unstyled">
+            <h4>Business Card Scanner</h4>
           </a>
         </div>
       </nav>

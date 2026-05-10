@@ -1,80 +1,67 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap");
 @import "tailwindcss";
 
 /* ============================================
-   Oat CSS Dark Theme Overrides
+   OpenCode Design System — Theme Overrides
    ============================================ */
 :root {
-  /* Override Oat theme vars for premium dark glassmorphic look */
-  --background: #09090b;
-  --foreground: #f8fafc;
-  --card: rgba(255, 255, 255, 0.03);
-  --card-foreground: #f8fafc;
-  --primary: #8b5cf6;
-  --primary-foreground: #ffffff;
-  --secondary: rgba(255, 255, 255, 0.06);
-  --secondary-foreground: #f8fafc;
-  --muted: rgba(255, 255, 255, 0.05);
-  --muted-foreground: #94a3b8;
-  --faint: rgba(255, 255, 255, 0.02);
-  --faint-foreground: #64748b;
-  --accent: rgba(255, 255, 255, 0.06);
-  --danger: #ef4444;
-  --danger-foreground: #ffffff;
-  --success: #10b981;
-  --success-foreground: #ffffff;
-  --warning: #f59e0b;
-  --warning-foreground: #09090b;
-  --border: rgba(255, 255, 255, 0.08);
-  --input: rgba(255, 255, 255, 0.08);
-  --ring: #8b5cf6;
+	/* OpenCode palette */
+	--canvas: #fdfcfc;
+	--ink: #201d1d;
+	--ink-deep: #0f0000;
+	--charcoal: #302c2c;
+	--body: #424245;
+	--mute: #646262;
+	--stone: #6e6e73;
+	--ash: #9a9898;
+	--surface-soft: #f8f7f7;
+	--surface-card: #f1eeee;
+	--surface-dark: #201d1d;
+	--surface-dark-elevated: #302c2c;
+	--hairline: rgba(15, 0, 0, 0.12);
+	--hairline-strong: #646262;
+	--on-dark: #fdfcfc;
+	--on-dark-mute: #9a9898;
 
-  /* Custom app tokens (not in Oat) */
-  --color-accent-glow: rgba(139, 92, 246, 0.4);
-  --color-whatsapp: #25d366;
-  --color-whatsapp-hover: #128c7e;
-  --color-bg-gradient: linear-gradient(145deg, #09090b 0%, #1c1c28 100%);
+	/* Map to Oat tokens that components consume */
+	--background: #fdfcfc;
+	--foreground: #201d1d;
+	--card: #fdfcfc;
+	--card-foreground: #201d1d;
+	--primary: #201d1d;
+	--primary-foreground: #fdfcfc;
+	--secondary: var(--surface-soft);
+	--secondary-foreground: var(--ink);
+	--muted: var(--surface-soft);
+	--muted-foreground: #646262;
+	--faint: var(--surface-card);
+	--faint-foreground: var(--stone);
+	--accent: var(--surface-soft);
+	--danger: #ff3b30;
+	--danger-foreground: #ffffff;
+	--success: #30d158;
+	--success-foreground: #ffffff;
+	--warning: #ff9f0a;
+	--warning-foreground: #201d1d;
+	--border: rgba(15, 0, 0, 0.12);
+	--input: rgba(15, 0, 0, 0.12);
+	--ring: #201d1d;
 
-  color-scheme: dark;
-  font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+	/* Custom app tokens */
+	--color-whatsapp: #25d366;
+	--color-whatsapp-hover: #128c7e;
+
+	/* OpenCode radius: containers 0px, interactive 4px */
+	--radius-medium: 0px;
+	--radius-large: 0px;
+
+	color-scheme: light;
+	font-family:
+		"Berkeley Mono", "JetBrains Mono", "IBM Plex Mono", ui-monospace,
+		"SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+		monospace;
 }
 
 body {
-  background: var(--color-bg-gradient);
-  background-attachment: fixed;
-}
-
-/* Animated background blobs for premium feel */
-body::before {
-  content: '';
-  position: fixed;
-  top: -10%;
-  left: -10%;
-  width: 50vw;
-  height: 50vw;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, rgba(0,0,0,0) 70%);
-  z-index: -1;
-  filter: blur(60px);
-  animation: float 10s ease-in-out infinite alternate;
-}
-
-body::after {
-  content: '';
-  position: fixed;
-  bottom: -10%;
-  right: -10%;
-  width: 60vw;
-  height: 60vw;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(37, 211, 102, 0.1) 0%, rgba(0,0,0,0) 70%);
-  z-index: -1;
-  filter: blur(80px);
-  animation: float 14s ease-in-out infinite alternate-reverse;
-}
-
-@keyframes float {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(30px, 50px); }
+	background: var(--canvas);
 }

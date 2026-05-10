@@ -2,273 +2,275 @@
    App Layout
    ============================================ */
 .app-shell {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  z-index: 1;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
 }
 
-/* Header — glassmorphism sticky bar (custom, Oat has no app header) */
+/* Header — flat sticky bar */
 .app-header {
-  background: rgba(9, 9, 11, 0.6);
-  border-bottom: 1px solid var(--border);
-  padding: var(--space-4) var(--space-6);
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+	background: var(--canvas);
+	border-bottom: 1px solid var(--hairline);
+	padding: var(--space-3) var(--space-6);
+	position: sticky;
+	top: 0;
+	z-index: 10;
 }
 
+.app-header .hstack {
+	max-width: 650px;
+	margin: 0 auto;
+}
 
+.app-header h4 {
+	margin: 0;
+}
 
-/* App main — extends Oat .container concept */
+/* App main */
 .app-main {
-  flex: 1;
-  max-width: 650px;
-  width: 100%;
-  margin: 0 auto;
-  padding: var(--space-8) var(--space-4);
+	flex: 1;
+	max-width: 650px;
+	width: 100%;
+	margin: 0 auto;
+	padding: 96px var(--space-4);
 }
 
 .app-main > * + * {
-  margin-top: var(--space-4);
-}
-
-/* Remove Oat's default main padding-block-start since we handle it */
-main.app-main {
-  padding-block-start: var(--space-8);
+	margin-top: var(--space-4);
 }
 
 /* Footer */
 .app-footer {
-  text-align: center;
-  padding: var(--space-6) var(--space-4);
-  color: var(--muted-foreground);
-  border-top: 1px solid var(--border);
+	text-align: center;
+	padding: var(--space-6) var(--space-4);
+	color: var(--body);
+	border-top: 1px solid var(--hairline);
 }
 
 /* ============================================
-   Glassmorphism Card Enhancement
-   Extends Oat .card — only adds glass effects,
-   does NOT re-declare Oat's existing padding/border/shadow/bg
+   Card — flat hairline block
    ============================================ */
 .card {
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-radius: var(--radius-large);
-  transition: transform var(--transition),
-              box-shadow var(--transition),
-              border-color var(--transition);
-  animation: fadeSlideUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
-}
-
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-large), 0 0 20px var(--color-accent-glow);
-  border-color: rgba(139, 92, 246, 0.3);
+	border: 1px solid var(--hairline);
+	border-radius: 0;
 }
 
 /* ============================================
-   Upload Area (Custom — no Oat equivalent)
+   Settings Area
+   ============================================ */
+.settings-area {
+	padding: var(--space-4);
+	background: var(--surface-soft);
+	border: 1px solid var(--hairline);
+	border-radius: 0;
+}
+
+/* ============================================
+   Upload Area
    ============================================ */
 .upload-area {
-  margin-top: var(--space-4);
+	margin-top: var(--space-4);
 }
 
 .upload-area input[type="file"] {
-  display: none;
+	display: none;
 }
 
 .upload-label {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-3);
-  padding: var(--space-10) var(--space-4);
-  background: var(--faint);
-  border: 2px dashed var(--border);
-  border-radius: var(--radius-large);
-  cursor: pointer;
-  color: var(--muted-foreground);
-  transition: all var(--transition);
-  text-align: center;
-  min-height: 200px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: var(--space-3);
+	padding: var(--space-10) var(--space-4);
+	background: var(--surface-soft);
+	border: 2px dashed var(--hairline-strong);
+	border-radius: 0;
+	cursor: pointer;
+	color: var(--muted-foreground);
+	transition:
+		border-color var(--transition),
+		color var(--transition);
+	text-align: center;
+	min-height: 200px;
 }
 
 .upload-label:hover {
-  border-color: var(--primary);
-  color: var(--foreground);
-  background: rgba(139, 92, 246, 0.05);
-  transform: scale(1.02);
+	border-color: var(--ink);
+	color: var(--ink);
 }
 
 .upload-icon {
-  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
-  transition: transform var(--transition);
-}
-
-.upload-label:hover .upload-icon {
-  transform: translateY(-5px);
+	font-size: 24px;
+	color: var(--muted-foreground);
 }
 
 /* ============================================
-   Image Preview (Custom)
+   Image Preview
    ============================================ */
 .preview-container {
-  position: relative;
-  margin-top: var(--space-4);
-  border-radius: var(--radius-large);
-  overflow: hidden;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-small);
+	position: relative;
+	margin-top: var(--space-4);
+	border-radius: 0;
+	overflow: hidden;
+	border: 1px solid var(--hairline);
 }
 
 .card-preview {
-  width: 100%;
-  max-height: 350px;
-  object-fit: contain;
-  display: block;
-  background: rgba(0, 0, 0, 0.4);
+	width: 100%;
+	max-height: 350px;
+	object-fit: contain;
+	display: block;
+	background: var(--surface-soft);
 }
 
-/* Reset button — uses Oat .icon .small button pattern + custom positioning */
+/* Reset button */
 .btn-reset {
-  position: absolute;
-  top: var(--space-3);
-  right: var(--space-3);
-  background: rgba(0, 0, 0, 0.6) !important;
-  border-color: rgba(255,255,255,0.1) !important;
-  color: #fff !important;
-  backdrop-filter: blur(4px);
-  border-radius: var(--radius-full) !important;
+	position: absolute;
+	top: var(--space-3);
+	right: var(--space-3);
+	min-height: 44px;
+	min-width: 44px;
+	background: var(--surface-dark) !important;
+	color: var(--on-dark) !important;
+	border: 1px solid var(--surface-dark-elevated) !important;
+	border-radius: 4px !important;
 }
 
 .btn-reset:hover:not(:disabled) {
-  background: var(--primary) !important;
-  transform: rotate(90deg) !important;
-  border-color: transparent !important;
+	background: var(--ink-deep) !important;
+	border-color: var(--ink-deep) !important;
 }
 
 /* ============================================
    Progress Section
-   Oat styles <progress> natively.
-   We only add wrapper + gradient accent override.
    ============================================ */
 .progress-section {
-  margin-top: var(--space-4);
-  padding: var(--space-4);
-  background: var(--faint);
-  border-radius: var(--radius-large);
-  border: 1px solid var(--border);
+	margin-top: var(--space-4);
+	padding: var(--space-4);
+	background: var(--surface-soft);
+	border: 1px solid var(--hairline);
+	border-radius: 0;
 }
 
-/* Override Oat progress bar color → gradient accent */
 .progress-section progress::-webkit-progress-value {
-  background: linear-gradient(90deg, var(--primary), #c084fc);
-  box-shadow: 0 0 10px var(--color-accent-glow);
+	background: var(--ink);
 }
 
 .progress-section progress::-moz-progress-bar {
-  background: linear-gradient(90deg, var(--primary), #c084fc);
+	background: var(--ink);
 }
 
 /* ============================================
    Scan Button
-   Uses Oat <button class="large"> as base.
-   Only adds gradient + shimmer effect.
    ============================================ */
 .scan-actions {
-  margin-top: var(--space-4);
+	margin-top: var(--space-4);
 }
 
 .scan-actions button {
-  width: 100%;
+	width: 100%;
+	border-radius: 4px;
+	min-height: 44px;
+	font-weight: 500;
 }
-
-
 
 /* ============================================
    Result Form
-   Oat handles <label data-field>, <input> natively.
-   We only override input bg for glassmorphism.
    ============================================ */
 .result-section input {
-  background-color: rgba(0, 0, 0, 0.2);
+	background-color: var(--surface-soft);
 }
 
 .result-section input:focus {
-  background-color: rgba(0, 0, 0, 0.4);
+	background-color: var(--canvas);
+	border-color: var(--ink);
 }
 
 .result-section input:hover:not(:focus) {
-  border-color: rgba(255, 255, 255, 0.2);
+	border-color: var(--hairline-strong);
 }
 
-/* Raw text details — Oat styles <details>/<summary> natively.
-   Only override textarea inside for glass look. */
+/* Raw text details — override Oat accordion */
+.raw-text-details {
+	border: none;
+	border-radius: 0;
+	overflow: visible;
+}
+
+.raw-text-details > summary {
+	/* padding: var(--space-3) 0; */
+	font-weight: var(--font-medium, 500);
+}
+
+.raw-text-details > *:not(summary) {
+	margin: 0;
+}
+
+.raw-text-details > summary::after {
+	display: none;
+}
+
+.raw-text-details > summary::before {
+	content: "+ ";
+}
+
+.raw-text-details[open] > summary::before {
+	content: "\2212 ";
+}
+
 .raw-text-details textarea {
-  background: transparent;
-  border: none;
-  border-top: 1px solid var(--border);
-  color: var(--muted-foreground);
-  font-family: var(--font-mono);
-  font-size: var(--text-8);
+	width: 100%;
+	box-sizing: border-box;
+	background: var(--surface-soft);
+	border: 1px solid var(--hairline);
+	color: var(--body);
+	font-size: var(--text-8);
 }
 
 .raw-text-details textarea:focus {
-  outline: none;
-  box-shadow: none;
+	outline: 1px solid var(--ink);
+	outline-offset: -1px;
 }
 
 /* ============================================
    Export Buttons
-   Uses Oat <button> as base.
-   Only adds gradient overrides for VCF + WhatsApp.
    ============================================ */
 .export-buttons {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-3);
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: var(--space-3);
 }
 
-/* VCF button — uses Oat default <button> (--primary) */
+.btn-vcf {
+	border-radius: 4px;
+	min-height: 44px;
+}
 
-/* WhatsApp button — flat green on Oat button base */
 .btn-whatsapp {
-  --primary: var(--color-whatsapp);
-  --primary-foreground: #fff;
-  text-decoration: none;
+	--primary: var(--color-whatsapp);
+	--primary-foreground: #fff;
+	border-radius: 4px;
+	min-height: 44px;
+	text-decoration: none;
 }
 
-/* ============================================
-   Animations
-   ============================================ */
-@keyframes fadeSlideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Scan Another outline button */
+.outline.w-100 {
+	border-radius: 4px;
+	min-height: 44px;
+	border-color: var(--hairline-strong);
 }
-
-.result-container > *:nth-child(1) { animation-delay: 0.1s; }
-.result-container > *:nth-child(2) { animation-delay: 0.2s; }
 
 /* ============================================
    Responsive
    ============================================ */
 @media (max-width: 600px) {
-  .app-main {
-    padding: var(--space-4) var(--space-3);
-  }
+	.app-main {
+		padding: 48px var(--space-3);
+	}
 
-  .export-buttons {
-    grid-template-columns: 1fr;
-  }
+	.export-buttons {
+		grid-template-columns: 1fr;
+	}
 }
