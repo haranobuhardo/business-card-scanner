@@ -200,7 +200,6 @@ export default function Scanner({
 						type="file"
 						id="card-image-input"
 						accept="image/*"
-						capture="environment"
 						onChange={handleFileChange}
 						disabled={isScanning}
 					/>
