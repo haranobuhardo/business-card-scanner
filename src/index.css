@@ -62,6 +62,55 @@
 		monospace;
 }
 
+/* ============================================
+   Dark Mode — auto follows device preference
+   ============================================ */
+@media (prefers-color-scheme: dark) {
+	:root {
+		--canvas: #0f0f0f;
+		--ink: #e8e6e3;
+		--ink-deep: #ffffff;
+		--charcoal: #c8c6c4;
+		--body: #c8c6c4;
+		--mute: #9a9898;
+		--stone: #8e8e93;
+		--ash: #6e6e73;
+		--surface-soft: #1c1c1e;
+		--surface-card: #2c2c2e;
+		--surface-dark: #e8e6e3;
+		--surface-dark-elevated: #c8c6c4;
+		--hairline: rgba(255, 255, 255, 0.12);
+		--hairline-strong: #9a9898;
+		--on-dark: #0f0f0f;
+		--on-dark-mute: #6e6e73;
+
+		--background: #0f0f0f;
+		--foreground: #e8e6e3;
+		--card: #1c1c1e;
+		--card-foreground: #e8e6e3;
+		--primary: #e8e6e3;
+		--primary-foreground: #0f0f0f;
+		--secondary: var(--surface-soft);
+		--secondary-foreground: var(--ink);
+		--muted: var(--surface-soft);
+		--muted-foreground: #9a9898;
+		--faint: var(--surface-card);
+		--faint-foreground: var(--stone);
+		--accent: var(--surface-soft);
+		--danger: #ff453a;
+		--danger-foreground: #ffffff;
+		--success: #30d158;
+		--success-foreground: #ffffff;
+		--warning: #ff9f0a;
+		--warning-foreground: #0f0f0f;
+		--border: rgba(255, 255, 255, 0.12);
+		--input: rgba(255, 255, 255, 0.12);
+		--ring: #e8e6e3;
+
+		color-scheme: dark;
+	}
+}
+
 body {
 	background: var(--canvas);
 }
