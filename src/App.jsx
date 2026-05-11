@@ -23,7 +23,9 @@ export default function App() {
 	const [progress, setProgress] = useState(null);
 	const [contact, setContact] = useState(EMPTY_CONTACT);
 
-	const [extractionMethod, setExtractionMethod] = useState("ocr"); // 'ocr' | 'ai' | 'openrouter'
+	const [extractionMethod, setExtractionMethod] = useState(
+		() => localStorage.getItem("scan_method") || "ocr",
+	);
 	const [apiKey, setApiKey] = useState(
 		() => localStorage.getItem("gemini_api_key") || "",
 	);
@@ -38,6 +40,10 @@ export default function App() {
 	useEffect(() => {
 		localStorage.setItem("openrouter_api_key", openrouterKey);
 	}, [openrouterKey]);
+
+	useEffect(() => {
+		localStorage.setItem("scan_method", extractionMethod);
+	}, [extractionMethod]);
 
 	const handleScan = useCallback(
 		async (file) => {
