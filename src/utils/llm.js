@@ -49,21 +49,29 @@ You are an expert contact information extractor. Extract the details from the pr
 CRITICAL INSTRUCTIONS:
 1. Pay close attention to distinguishing personal contact info vs company contact info.
 2. If there are multiple emails, the one with the person's name is their email, the generic one (like info@, support@) is the company email. Return the person's email in 'email'.
-3. If there are multiple phone numbers, prioritize the direct line or mobile number for 'mobile' and the general office number for 'phone'.
-4. Format intelligently: lowercase all emails, remove all spaces/dashes from phone numbers and format them in clean international format (e.g. +62812345678), fix obvious OCR typos, and trim all whitespace.
-5. Do NOT hallucinate. If a field is not present, leave it as an empty string.
-6. Don't put any explanation into the JSON response! Just return the expected output (if you want to explain, just explain on the rawText output).
+3. Format intelligently: lowercase all emails, remove all spaces/dashes from phone numbers and format them in clean international format (e.g. +62812345678), fix obvious OCR typos, and trim all whitespace.
+4. Do NOT hallucinate. If a field is not present, leave it as an empty string.
+5. Don't put any explanation into the JSON response! Just return the expected output (if you want to explain, just explain on the rawText output).
+
+MOBILE NUMBER RULES (VERY IMPORTANT):
+- You MUST extract ONLY the person's personal mobile/cell phone number into 'mobile'.
+- GOOD mobile numbers: starts with 081, 082, 083, 085, 087, 088, 089, or international +6281, +6282, etc.
+- BAD — these are LANDLINE/OFFICE numbers, do NOT return them as 'mobile':
+  * Numbers starting with area codes: 021, 022, 031, 024, 025, 026, 027, 028, 029, 032, 035, 036, 040, 05x, 06x, 07x, 09x (non-mobile)
+  * Numbers labeled as "Tel:", "T:", "Fax:", "F:", "Office:", "Phone:", "Switchboard", "Board"
+  * Short numbers (fewer than 10 digits)
+- If the card only shows a landline/office number and no personal mobile, set 'mobile' to "".
+- If multiple numbers are present, pick the one that is clearly the person's mobile (labeled HP, Mobile, Cell, M:, or matches mobile prefix pattern).
 
 Return ONLY a valid JSON object matching exactly this structure (no markdown code blocks, just raw JSON).
 EXAMPLE:
 {
   "name": "John Doe",
   "email": "john.doe@example.com",
-  "phone": "+1234567890",
-  "mobile": "+1987654321",
+  "mobile": "+6281234567890",
   "company": "Example Corp",
   "website": "www.example.com",
-  "rawText": "Name: John Doe. Company: Example Corp. Phone: +1234567890. Mobile: +1987654321. Email: john.doe@example.com. Website: www.example.com."
+  "rawText": "Name: John Doe. Company: Example Corp. Mobile: +6281234567890. Email: john.doe@example.com. Website: www.example.com."
 }
 `;
 
@@ -94,7 +102,6 @@ EXAMPLE:
 					properties: {
 						name: { type: Type.STRING },
 						email: { type: Type.STRING },
-						phone: { type: Type.STRING },
 						mobile: { type: Type.STRING },
 						company: { type: Type.STRING },
 						website: { type: Type.STRING },
@@ -194,12 +201,22 @@ export async function extractContactWithOpenRouter(file, apiKey, onProgress) {
 {
   "name": "",
   "email": "",
-  "phone": "",
   "mobile": "",
   "company": "",
   "website": "",
   "rawText": ""
 }
+
+MOBILE NUMBER RULES (VERY IMPORTANT):
+- Extract ONLY the person's personal mobile/cell phone number into 'mobile'.
+- GOOD mobile numbers: starts with 081, 082, 083, 085, 087, 088, 089, or international +6281, +6282, etc.
+- BAD — these are LANDLINE/OFFICE numbers, do NOT return them as 'mobile':
+  * Numbers starting with area codes: 021, 022, 031, 024, 025, 026, 027, 028, 029, 032, 035, 036, 040, 05x, 06x, 07x
+  * Numbers labeled as "Tel:", "T:", "Fax:", "F:", "Office:", "Phone:", "Switchboard"
+  * Short numbers (fewer than 10 digits)
+- If only a landline/office number is present and no personal mobile, set 'mobile' to "".
+- If multiple numbers exist, pick the one labeled HP, Mobile, Cell, M:, or matching mobile prefix pattern.
+
 Use empty string for any field not found. Format emails lowercase, phone numbers in international format (e.g. +62812345678).`;
 
 	try {

@@ -11,7 +11,6 @@ import "./App.css";
 const EMPTY_CONTACT = {
 	name: "",
 	email: "",
-	phone: "",
 	mobile: "",
 	company: "",
 	website: "",
