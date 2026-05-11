@@ -21,6 +21,8 @@ export default function Scanner({
 	setExtractionMethod,
 	apiKey,
 	setApiKey,
+	openrouterKey,
+	setOpenrouterKey,
 }) {
 	const [preview, setPreview] = useState(null);
 	const [selectedFile, setSelectedFile] = useState(null);
@@ -149,6 +151,18 @@ export default function Scanner({
 								<span aria-hidden="true">[+]</span> Smart AI (Gemma 4)
 							</span>
 						</label>
+						<label className="hstack gap-2 cursor-pointer">
+							<input
+								type="radio"
+								name="method"
+								value="openrouter"
+								checked={extractionMethod === "openrouter"}
+								onChange={() => setExtractionMethod("openrouter")}
+							/>
+							<span>
+								<span aria-hidden="true">[+]</span> Qianfan-OCR-Fast
+							</span>
+						</label>
 					</div>
 
 					{extractionMethod === "ai" && (
@@ -160,6 +174,19 @@ export default function Scanner({
 									placeholder="AIzaSy..."
 									value={apiKey}
 									onChange={(e) => setApiKey(e.target.value)}
+								/>
+							</label>
+						</div>
+					)}
+					{extractionMethod === "openrouter" && (
+						<div className="api-key-input mt-4">
+							<label data-field>
+								<small>OpenRouter API Key (Saved locally)</small>
+								<input
+									type="password"
+									placeholder="sk-or-v1-..."
+									value={openrouterKey}
+									onChange={(e) => setOpenrouterKey(e.target.value)}
 								/>
 							</label>
 						</div>
@@ -255,7 +282,8 @@ export default function Scanner({
 							!selectedFile ||
 							isScanning ||
 							isCompressing ||
-							(extractionMethod === "ai" && !apiKey)
+							(extractionMethod === "ai" && !apiKey) ||
+							(extractionMethod === "openrouter" && !openrouterKey)
 						}
 						// aria-busy={isCompressing || isScanning ? "true" : undefined}
 						// data-spinner={isCompressing || isScanning ? "small" : undefined}
